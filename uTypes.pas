@@ -143,6 +143,49 @@ type
     procedure DeclaredMethodsGet(const AClass: TObject; const AList: TList<IRttiMethod>);
   end;
 
+  // Threading
+
+  ISync = interface(ILogBasic)
+    ['{1F76E95A-7677-4B69-B02E-3034A0B4C5B4}']
+    procedure LogSet(const ALogProc: TProcArg1<string>); overload;
+    procedure LogSet(const ALog: ILog); overload;
+    procedure Sync(const AProc: TProcArg0);
+  end;
+
+  // Threading task
+
+  ITaskAbstract = interface(ISync)
+    ['{8C0CD118-E32B-4EA7-91D4-50FB5DDFC8DB}']
+    function GetName: string;
+
+    function IsDone: Boolean;
+    function IsStarted: Boolean;
+    function IsTerminated: Boolean;
+
+    procedure Refresh;
+    procedure Run;
+    procedure Terminate;
+    function WaitFor(const AMiliSec: Integer): Boolean;
+  end;
+
+  ITask = interface(ITaskAbstract)
+    ['{CB271E66-0416-4B40-BBAD-BA0CD3FF8F89}']
+    procedure ThreadSleep(const AMiliSec: Integer);
+    function Ticking: Boolean;
+  end;
+
+  ITask<T> = interface(ITask)
+    ['{FE7241C4-45C0-493C-8BE0-04B044CE08FB}']
+    function Data: T;
+    procedure SetData(const AData: T); overload;
+  end;
+
+  ITaskCluster = interface(ITaskAbstract)
+    ['{CB271E66-0416-4B40-BBAD-BA0CD3FF8F89}']
+    procedure Add(const ATask: ITaskAbstract);
+    procedure DoOnAdd(const AOnAdd: TProcArg1<ITaskAbstract>);
+  end;
+
   // Threading tools
 
   ICrit = interface
@@ -215,6 +258,7 @@ type
     function LogNew(const ALogProc: TProcArg1<string>): ILog;
     function Rnd: IRnd;
     function Rtti: IRtti;
+    function TaskClusterMain: ITaskCluster;
   end;
 
   // Helpers
