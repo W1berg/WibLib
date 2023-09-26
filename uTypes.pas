@@ -213,6 +213,7 @@ type
   ILock<T> = interface(ILock)
     ['{8D933458-D5DE-4FBA-A069-BC4864C69F92}']
     function Data: T;
+    procedure SetData(const AData: T);
   end;
 
   ILockWrap<T: constructor> = interface(ILock < IWrap < T >> )

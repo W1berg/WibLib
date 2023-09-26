@@ -136,7 +136,7 @@ begin
   for var LTask in FTasks do
     LTask.Terminate;
 
-  SyncCheck; // Flush Synchronize messages
+  SyncCheck; // Flush sync messages for when program is closing
 end;
 
 function TTaskCluster.WaitFor(const AMiliSec: Integer): Boolean;

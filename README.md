@@ -1,5 +1,5 @@
 # WibLib
-These are files shared by my other projects
+Delphi library that are used by my other Delphi [projects](https://github.com/W1berg?tab=repositories)
 
 ## ⚡ Features
 Convenient wrappers for:
@@ -13,11 +13,6 @@ Base32 encoding/decoding with:
 * `Optional padding`
 * `Encoding/decoding maps`
 * `No resizing of buffer`
-
-Multi-threading related classes:
-* `Critical section`
-* `Event`
-* `Reader/Writer lock (standalone or paired with <T>)`
 
 Log class injected with log procedures per log type
 
@@ -42,10 +37,25 @@ TBytes record helper with various quality of life functions and supporting:
 
 Generic interface wrapper automating freeing of all <T: constructor> types
 
+Multi-threading related classes:
+* `Critical section`
+* `Event`
+* `Reader/Writer lock (standalone or paired with <T>)`
+
+### ⚡ Thread Tasks
+The task classes dynamically runs any function or inherited class in modes:
+* `Regular function call, refreshed instead of looping until terminated`
+* `Function running in thread`
+
+The task cluster class registers tasks or other task clusters to dynamically run the program in modes:
+* `Single-threaded`
+* `Main-thread and worker-thread`
+* `Main-thread and worker-thread for every cluster`
+* `Multi-threaded`
+
 ## 🙌 List of planned features
-Threading library with configurable single-threaded mode<br>
-Saving test timelapses and configuarbly allowing tests by certain timelapse<br>
-Cross-platform GetTicks64
+* `Saving test timelapses and configuarbly allowing tests by certain timelapse`
+* `Cross-platform GetTicks64`
 
 ## Dependencies
 ❗ Built with Rad Studio/Delphi 10.4<br>
