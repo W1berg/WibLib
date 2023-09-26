@@ -12,7 +12,9 @@ uses
 type
   TFac = class(TInterfacedObject, IFac)
   private
-    class var FFacMain: IFac;
+  class var
+    FFacMain: IFac;
+    FTaskClusterMain: ITaskCluster;
 
   var
     FLog: ILog;
@@ -43,6 +45,7 @@ type
     function LogNew(const ALogProc: TProcArg1<string>): ILog;
     function Rnd: IRnd;
     function Rtti: IRtti;
+    function TaskClusterMain: ITaskCluster;
   end;
 
 implementation
@@ -59,6 +62,7 @@ uses
   uLog,
   uRnd,
   uRttiWrap,
+  uTaskCluster,
   uWrap,
 
   SysUtils;
@@ -66,11 +70,12 @@ uses
 class procedure TFac.Init(const ALog: ILog);
 begin
   FFacMain := TFac.Create(ALog);
+  FTaskClusterMain := TTaskCluster.Create;
 end;
 
 class procedure TFac.Init(const ALogProc: TProcArg1<string>);
 begin
-  FFacMain := TFac.Create(ALogProc);
+  Init(TLog.Create(ALogProc));
 end;
 
 class function TFac.FacMain: IFac;
@@ -168,6 +173,11 @@ end;
 function TFac.Rtti: IRtti;
 begin
   Result := TRttiWrap.Create;
+end;
+
+function TFac.TaskClusterMain: ITaskCluster;
+begin
+  Result := FTaskClusterMain;
 end;
 
 end.
